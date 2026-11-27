@@ -17,5 +17,6 @@ Every session in that environment then gets `~/.claude/CLAUDE.md` and the skills
 - Instructions / memory: edit `CLAUDE.md`.
 - Your own skill: add `skills/<name>/SKILL.md`.
 - Someone else's skill: add a `fetch <owner/repo> <path>` line in `setup.sh`.
+- Plugin: add its marketplace and `name@marketplace` to the two lists in `setup.sh`.
 
 Commit and push; the next cloud session picks it up. This repo is public, so never put secrets here.

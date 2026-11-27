@@ -25,3 +25,19 @@ fetch pbakaus/impeccable       .agents/skills/impeccable
 
 rm -rf "$TMP"
 echo "Installed skills: $(ls ~/.claude/skills | tr '\n' ' ')"
+
+# Plugins (each bundles more skills). A failure here only skips that plugin.
+if command -v claude >/dev/null; then
+  for m in anthropics/claude-plugins-official \
+           https://github.com/blader/humanizer.git \
+           https://github.com/pbakaus/impeccable.git \
+           https://github.com/DietrichGebert/ponytail.git; do
+    claude plugin marketplace add "$m" >/dev/null 2>&1 || echo "warn: marketplace $m not added"
+  done
+  for p in superpowers@claude-plugins-official frontend-design@claude-plugins-official \
+           humanizer@humanizer impeccable@impeccable ponytail@ponytail; do
+    claude plugin install "$p" >/dev/null 2>&1 && echo "plugin ok: $p" || echo "warn: plugin $p not installed"
+  done
+else
+  echo "warn: claude CLI not found, plugins skipped"
+fi
